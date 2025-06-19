@@ -127,7 +127,7 @@ const Pricing = ({
                   
                   <div className="relative">
                     <Image
-                      src="/qris-image.png"
+                      src="/qr.jpg"
                       alt="QRIS Payment"
                       width={280}
                       height={280}
@@ -137,8 +137,8 @@ const Pricing = ({
                     <Button
                       isIconOnly
                       as="a"
-                      href="/qris-image.png"
-                      download="QRIS_Pembayaran.png"
+                      href="/qr.jpg"
+                      download="QRIS_Pembayaran.jpg"
                       aria-label="Unduh QRIS"
                       className="absolute bottom-2 right-2 bg-black/20 backdrop-blur-sm"
                       size="sm"
