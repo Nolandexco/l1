@@ -1,5 +1,3 @@
-// components/Pricing.tsx (atau di mana pun file ini berada)
-
 "use client";
 
 import {
@@ -9,16 +7,13 @@ import {
   CardFooter,
   CardHeader,
   Divider,
-  // Hapus Link dari NextUI jika Anda akan menggunakan Link dari Next.js
+  Link,
   Spacer,
 } from "@nextui-org/react";
-import Link from "next/link"; // Gunakan Link dari Next.js untuk navigasi
+
 import { ALL_TIERS } from "@/config/tiers";
 import { FaCheck } from "react-icons/fa";
 import { RoughNotation } from "react-rough-notation";
-
-// Hapus semua state dan fungsi yang berhubungan dengan modal:
-// useState, PaymentModal, dll. tidak diperlukan lagi di sini.
 
 const Pricing = ({
   id,
@@ -30,15 +25,6 @@ const Pricing = ({
   langName: string;
 }) => {
   const TIERS = ALL_TIERS[`TIERS_${langName.toUpperCase()}`];
-
-  // Fungsi untuk mengekstrak angka dari string harga (misal: "Rp 100.000")
-  const getPriceAsNumber = (priceString: string): number => {
-    if (typeof priceString !== 'string') return 0;
-    // Hapus semua karakter non-digit
-    const digitsOnly = priceString.replace(/[^0-9]/g, '');
-    return parseInt(digitsOnly, 10) || 0;
-  }
-
   return (
     <section
       id={id}
@@ -50,7 +36,10 @@ const Pricing = ({
             {locale.title}
           </RoughNotation>
         </h2>
-        <Spacer y={2} />
+
+        {/* Baris <h3> yang berisi "Get unlimited access" telah dihapus dari sini */}
+
+        <Spacer y={2} /> {/* Spacer dikurangi agar jarak tidak terlalu jauh */}
         <p className="text-large text-default-500">{locale.description}</p>
       </div>
       <Spacer y={8} />
@@ -67,6 +56,11 @@ const Pricing = ({
                 <span className="inline bg-gradient-to-br from-foreground to-foreground-600 bg-clip-text text-2xl font-semibold leading-7 tracking-tight text-transparent">
                   {tier.price}
                 </span>
+                {typeof tier.price !== "string" ? (
+                  <span className="text-small font-medium text-default-400">
+                    {tier.price}
+                  </span>
+                ) : null}
               </p>
               <ul className="flex flex-col gap-2">
                 {tier.features?.map((feature) => (
@@ -80,11 +74,12 @@ const Pricing = ({
             <CardFooter>
               <Button
                 fullWidth
-                as={Link} // Gunakan komponen Button sebagai Link
+                as={Link}
                 color={tier.buttonColor}
+                href={tier.href}
                 variant={tier.buttonVariant}
-                // Buat URL dengan query parameters
-                href={`/payment?total=${getPriceAsNumber(tier.price)}&layanan=${encodeURIComponent(tier.title)}`}
+                target="_blank"
+                rel="noopener noreferrer nofollow"
               >
                 {tier.buttonText}
               </Button>
@@ -93,7 +88,6 @@ const Pricing = ({
         ))}
       </div>
       <Spacer y={12} />
-      {/* Hapus pemanggilan <PaymentModal /> dari sini */}
     </section>
   );
 };
