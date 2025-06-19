@@ -109,7 +109,7 @@ const Pricing = ({
         <Spacer y={12} />
       </section>
 
-      {/* --- MODAL PEMBAYARAN REVISI --- */}
+      {/* --- MODAL PEMBAYARAN REVISI FINAL --- */}
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
@@ -125,27 +125,28 @@ const Pricing = ({
                   <h3 className="text-lg font-semibold text-default-700">Scan untuk Membayar</h3>
                   <Spacer y={2} />
                   
-                  <div className="relative">
-                    <Image
-                      src="/qr.jpg"
-                      alt="QRIS Payment"
-                      width={280}
-                      height={280}
-                      className="object-contain rounded-lg"
-                    />
-                    {/* Mengubah 'top-2' menjadi 'bottom-2' untuk memindahkan ikon ke bawah */}
-                    <Button
-                      isIconOnly
-                      as="a"
-                      href="/qr.jpg"
-                      download="QRIS_Pembayaran.jpg"
-                      aria-label="Unduh QRIS"
-                      className="absolute bottom-2 right-2 bg-black/20 backdrop-blur-sm"
-                      size="sm"
-                    >
-                      <FaDownload className="text-white" />
-                    </Button>
-                  </div>
+                  {/* Gambar QRIS */}
+                  <Image
+                    src="/qr.jpg"
+                    alt="QRIS Payment"
+                    width={280}
+                    height={280}
+                    className="object-contain rounded-lg"
+                  />
+                  
+                  <Spacer y={4} />
+
+                  {/* Tombol diletakkan di bawah gambar & nama file diubah */}
+                  <Button
+                    as="a"
+                    href="/qr.jpg"
+                    download="bisnovo.jpg" // Nama file diubah di sini
+                    variant="flat"
+                    color="primary"
+                    startContent={<FaDownload />}
+                  >
+                    Unduh QRIS
+                  </Button>
                 </div>
 
                 <Divider className="my-4" />
