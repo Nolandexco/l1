@@ -14,7 +14,19 @@ import { ALL_TIERS } from "@/config/tiers";
 import { FaCheck } from "react-icons/fa";
 import { RoughNotation } from "react-rough-notation";
 import { useState } from "react";
-import PaymentModal from "../ui/PaymentModal"; // Corrected import path
+import PaymentModal from "../ui/PaymentModal";
+
+// Definisikan tipe untuk tier berdasarkan struktur ALL_TIERS
+type Tier = {
+  key: string;
+  title: string;
+  description: string;
+  price: string | number;
+  features: string[];
+  buttonColor: string;
+  buttonVariant: string;
+  buttonText: string;
+};
 
 const Pricing = ({
   id,
@@ -22,20 +34,20 @@ const Pricing = ({
   langName,
 }: {
   id: string;
-  locale: any;
+  locale: any; // Ganti dengan tipe yang lebih spesifik jika memungkinkan
   langName: string;
 }) => {
-  const TIERS = ALL_TIERS[`TIERS_${langName.toUpperCase()}`];
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
-  const [selectedTier, setSelectedTier] = useState(null); // State to store selected tier
+  const TIERS = ALL_TIERS[`TIERS_${langName.toUpperCase()}`] as Tier[];
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // State untuk visibilitas modal
+  const [selectedTier, setSelectedTier] = useState<Tier | null>(null); // State untuk tier yang dipilih
 
-  // Function to handle button click and open modal
-  const handleButtonClick = (tier) => {
+  // Fungsi untuk menangani klik tombol dan membuka modal
+  const handleButtonClick = (tier: Tier) => {
     setSelectedTier(tier);
     setIsModalOpen(true);
   };
 
-  // Function to close the modal
+  // Fungsi untuk menutup modal
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedTier(null);
@@ -89,7 +101,7 @@ const Pricing = ({
                 fullWidth
                 color={tier.buttonColor}
                 variant={tier.buttonVariant}
-                onClick={() => handleButtonClick(tier)} // Trigger modal on click
+                onClick={() => handleButtonClick(tier)} // Memicu modal saat klik
               >
                 {tier.buttonText}
               </Button>
@@ -97,7 +109,7 @@ const Pricing = ({
           </Card>
         ))}
       </div>
-      {/* Render PaymentModal and pass necessary props */}
+      {/* Render PaymentModal dan kirimkan props yang diperlukan */}
       {selectedTier && (
         <PaymentModal
           isOpen={isModalOpen}
