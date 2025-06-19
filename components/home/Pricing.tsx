@@ -10,23 +10,10 @@ import {
   Link,
   Spacer,
 } from "@nextui-org/react";
+
 import { ALL_TIERS } from "@/config/tiers";
 import { FaCheck } from "react-icons/fa";
 import { RoughNotation } from "react-rough-notation";
-import { useState } from "react";
-import PaymentModal from "../ui/PaymentModal";
-
-// Definisikan tipe untuk tier berdasarkan struktur ALL_TIERS
-type Tier = {
-  key: string;
-  title: string;
-  description: string;
-  price: string | number;
-  features: string[];
-  buttonColor: "success" | "warning" | "default" | "primary" | "secondary" | "danger" | undefined;
-  buttonVariant: "solid" | "bordered" | "light" | "flat" | "ghost" | "shadow" | undefined;
-  buttonText: string;
-};
 
 const Pricing = ({
   id,
@@ -34,25 +21,10 @@ const Pricing = ({
   langName,
 }: {
   id: string;
-  locale: any; // Ganti dengan tipe spesifik jika memungkinkan
+  locale: any;
   langName: string;
 }) => {
-  const TIERS = ALL_TIERS[`TIERS_${langName.toUpperCase()}`] as Tier[];
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // State untuk visibilitas modal
-  const [selectedTier, setSelectedTier] = useState<Tier | null>(null); // State untuk tier yang dipilih
-
-  // Fungsi untuk menangani klik tombol dan membuka modal
-  const handleButtonClick = (tier: Tier) => {
-    setSelectedTier(tier);
-    setIsModalOpen(true);
-  };
-
-  // Fungsi untuk menutup modal
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedTier(null);
-  };
-
+  const TIERS = ALL_TIERS[`TIERS_${langName.toUpperCase()}`];
   return (
     <section
       id={id}
@@ -64,7 +36,10 @@ const Pricing = ({
             {locale.title}
           </RoughNotation>
         </h2>
-        <Spacer y={2} />
+
+        {/* Baris <h3> yang berisi "Get unlimited access" telah dihapus dari sini */}
+
+        <Spacer y={2} /> {/* Spacer dikurangi agar jarak tidak terlalu jauh */}
         <p className="text-large text-default-500">{locale.description}</p>
       </div>
       <Spacer y={8} />
@@ -99,9 +74,12 @@ const Pricing = ({
             <CardFooter>
               <Button
                 fullWidth
+                as={Link}
                 color={tier.buttonColor}
+                href={tier.href}
                 variant={tier.buttonVariant}
-                onClick={() => handleButtonClick(tier)} // Memicu modal saat klik
+                target="_blank"
+                rel="noopener noreferrer nofollow"
               >
                 {tier.buttonText}
               </Button>
@@ -109,14 +87,6 @@ const Pricing = ({
           </Card>
         ))}
       </div>
-      {/* Render PaymentModal dan kirimkan props yang diperlukan */}
-      {selectedTier && (
-        <PaymentModal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          tier={selectedTier}
-        />
-      )}
       <Spacer y={12} />
     </section>
   );
