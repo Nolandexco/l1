@@ -20,7 +20,6 @@ import {
 } from "@nextui-org/react";
 
 import { ALL_TIERS } from "@/config/tiers";
-// Menambahkan ikon FaDownload
 import { FaCheck, FaWhatsapp, FaDownload } from "react-icons/fa";
 import { RoughNotation } from "react-rough-notation";
 
@@ -109,46 +108,51 @@ const Pricing = ({
         <Spacer y={12} />
       </section>
 
-      {/* --- MODAL PEMBAYARAN YANG SUDAH DIREVISI --- */}
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="md" scrollBehavior="inside">
+      {/* --- MODAL PEMBAYARAN REVISI FINAL --- */}
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        size="sm"
+        // Menambahkan 'placement' untuk memaksa modal selalu di tengah layar
+        placement="center"
+      >
         <ModalContent>
           {(onClose) => (
             <>
-              {/* Judul diubah menjadi lebih ringkas */}
-              <ModalHeader className="flex flex-col gap-1 text-xl">
-                Pembayaran
-              </ModalHeader>
+              {/* Header dikosongkan untuk menghapus teks "Pembayaran" */}
+              <ModalHeader className="flex flex-col gap-1"></ModalHeader>
               <ModalBody className="pb-6">
                 <div className="flex flex-col items-center text-center">
-                  <h3 className="text-lg font-semibold">Scan untuk Membayar</h3>
+                  <h3 className="text-lg font-semibold text-default-700">Scan untuk Membayar</h3>
                   <Spacer y={2} />
-                  <Image
-                    src="/qris-image.png"
-                    alt="QRIS Payment"
-                    width={280}
-                    height={280}
-                    className="object-contain rounded-lg"
-                  />
-                  <Spacer y={3} />
-                  {/* Tombol untuk mengunduh gambar QRIS */}
-                  <Button
-                    as="a"
-                    href="/qris-image.png"
-                    download="QRIS_Pembayaran.png"
-                    variant="flat"
-                    color="primary"
-                    startContent={<FaDownload />}
-                  >
-                    Unduh QRIS
-                  </Button>
+                  
+                  {/* Container untuk menampung gambar dan tombol download */}
+                  <div className="relative">
+                    <Image
+                      src="/qris-image.png"
+                      alt="QRIS Payment"
+                      width={280}
+                      height={280}
+                      className="object-contain rounded-lg"
+                    />
+                    {/* Tombol download minimalis di pojok gambar */}
+                    <Button
+                      isIconOnly
+                      as="a"
+                      href="/qris-image.png"
+                      download="QRIS_Pembayaran.png"
+                      aria-label="Unduh QRIS"
+                      className="absolute top-2 right-2 bg-black/20 backdrop-blur-sm"
+                      size="sm"
+                    >
+                      <FaDownload className="text-white" />
+                    </Button>
+                  </div>
                 </div>
 
                 <Divider className="my-4" />
 
                 <div className="w-full">
-                  <h3 className="text-lg font-semibold mb-3">
-                    Rincian Pesanan
-                  </h3>
                   <div className="flex justify-between items-center">
                     <p className="text-default-500">Paket</p>
                     <p className="font-medium text-right">{selectedTier?.title}</p>
