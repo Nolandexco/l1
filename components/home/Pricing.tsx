@@ -23,8 +23,8 @@ type Tier = {
   description: string;
   price: string | number;
   features: string[];
-  buttonColor: string;
-  buttonVariant: string;
+  buttonColor: "success" | "warning" | "default" | "primary" | "secondary" | "danger" | undefined;
+  buttonVariant: "solid" | "bordered" | "light" | "flat" | "ghost" | "shadow" | undefined;
   buttonText: string;
 };
 
@@ -34,7 +34,7 @@ const Pricing = ({
   langName,
 }: {
   id: string;
-  locale: any; // Ganti dengan tipe yang lebih spesifik jika memungkinkan
+  locale: any; // Ganti dengan tipe spesifik jika memungkinkan
   langName: string;
 }) => {
   const TIERS = ALL_TIERS[`TIERS_${langName.toUpperCase()}`] as Tier[];
