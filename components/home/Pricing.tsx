@@ -24,7 +24,6 @@ import { FaCheck, FaWhatsapp } from "react-icons/fa";
 import { RoughNotation } from "react-rough-notation";
 
 // Import tipe 'Tier' dari file definisi tipe global proyek Anda.
-// Ini akan memperbaiki error "Type is not assignable".
 import { Tier } from "@/types/pricing";
 
 const Pricing = ({
@@ -36,8 +35,6 @@ const Pricing = ({
   locale: any;
   langName: string;
 }) => {
-  // Baris ini sekarang akan valid karena tipe `Tier` yang diimpor
-  // cocok dengan data dari `ALL_TIERS`.
   const TIERS: Tier[] = ALL_TIERS[`TIERS_${langName.toUpperCase()}`];
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedTier, setSelectedTier] = useState<Tier | null>(null);
@@ -47,7 +44,7 @@ const Pricing = ({
     onOpen();
   };
 
-  const WHATSAPP_NUMBER = "6285156779923"; // Gunakan kode negara (62)
+  const WHATSAPP_NUMBER = "6285156779923";
 
   return (
     <>
@@ -68,8 +65,7 @@ const Pricing = ({
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 justify-items-center w-full">
           {TIERS?.map((tier) => (
             <Card
-              // Properti 'key' di sini akan menerima tipe Enum dari data Anda
-              key={tier.key}
+              key={tier.key as React.Key} // Menggunakan type assertion untuk key
               className="p-3 flex-1 w-full max-w-md"
               shadow="md"
             >
@@ -86,14 +82,17 @@ const Pricing = ({
                     {tier.price}
                   </span>
                 </p>
-                <ul className="flex flex-col gap-2">
-                  {tier.features?.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2">
-                      <FaCheck className="text-blue-500 flex-shrink-0" />
-                      <p className="text-default-500">{feature}</p>
-                    </li>
-                  ))}
-                </ul>
+                {/* Menambahkan pengecekan untuk 'features' sebelum mapping */}
+                {tier.features && tier.features.length > 0 && (
+                  <ul className="flex flex-col gap-2">
+                    {tier.features.map((feature) => (
+                      <li key={feature} className="flex items-center gap-2">
+                        <FaCheck className="text-blue-500 flex-shrink-0" />
+                        <p className="text-default-500">{feature}</p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </CardBody>
               <CardFooter>
                 <Button
@@ -121,7 +120,6 @@ const Pricing = ({
               </ModalHeader>
               <ModalBody>
                 <div className="flex flex-col md:flex-row gap-6">
-                  {/* Sisi Kiri: Gambar QRIS */}
                   <div className="flex-1 flex flex-col items-center justify-center text-center">
                     <h3 className="text-lg font-semibold">Scan QRIS</h3>
                     <p className="text-sm text-default-500 mb-2">
@@ -139,8 +137,10 @@ const Pricing = ({
                     orientation="vertical"
                     className="hidden md:flex h-auto"
                   />
-                  <Divider orientation="horizontal" className="flex md:hidden" />
-                  {/* Sisi Kanan: Rincian Pembayaran */}
+                  <Divider
+                    orientation="horizontal"
+                    className="flex md:hidden"
+                  />
                   <div className="flex-1">
                     <h3 className="text-lg font-semibold mb-3">
                       Rincian Pesanan
@@ -157,18 +157,26 @@ const Pricing = ({
                       </p>
                     </div>
                     <Divider className="my-3" />
-                    <ul className="flex flex-col gap-2 mb-3">
-                      <p className="font-medium mb-1">Fitur termasuk:</p>
-                      {selectedTier?.features.map((feature) => (
-                        <li
-                          key={feature}
-                          className="flex items-center gap-2 text-sm"
-                        >
-                          <FaCheck className="text-blue-500" />
-                          <p className="text-default-500">{feature}</p>
-                        </li>
-                      ))}
-                    </ul>
+                    
+                    {/* --- INI BAGIAN YANG DIPERBAIKI --- */}
+                    {/* Cek apakah 'features' ada & tidak kosong sebelum di-render */}
+                    {selectedTier?.features &&
+                      selectedTier.features.length > 0 && (
+                        <ul className="flex flex-col gap-2 mb-3">
+                          <p className="font-medium mb-1">Fitur termasuk:</p>
+                          {selectedTier.features.map((feature) => (
+                            <li
+                              key={feature}
+                              className="flex items-center gap-2 text-sm"
+                            >
+                              <FaCheck className="text-blue-500" />
+                              <p className="text-default-500">{feature}</p>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    {/* --- AKHIR BAGIAN PERBAIKAN --- */}
+
                     <p className="text-xs text-default-400 mt-4">
                       Setelah melakukan pembayaran, silakan konfirmasi melalui
                       tombol WhatsApp di bawah.
