@@ -27,6 +27,14 @@ const Feature = ({
     // Tambah key lain kalau fitur ke-3, ke-4, dll pakai video
   };
 
+  // --- START PERUBAHAN ---
+  // Definisikan link untuk 6 tombol
+  const exampleLinks = Array.from({ length: 6 }, (_, i) => ({
+    name: `Contoh ${i + 1}`,
+    url: `https://bisnovocontoh${i + 1}.vercel.app`,
+  }));
+  // --- END PERUBAHAN ---
+
   return (
     <section id={id}>
       <div className="container space-y-6 rounded-md bg-secondary py-14 lg:py-24">
@@ -66,7 +74,26 @@ const Feature = ({
 
               {selectedFeatureIndex === index && (
                 <div className="mt-4 w-full">
-                  {YOUTUBE_EMBEDS[index] ? (
+                  {/* --- START PERUBAHAN --- */}
+                  {/* Jika ini adalah kartu fitur pertama (index 0), tampilkan 6 tombol */}
+                  {index === 0 ? (
+                    <div className="grid grid-cols-3 gap-2 w-full">
+                      {exampleLinks.map((link) => (
+                        <a
+                          key={link.url}
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          // Hentikan event click agar tidak menutup kartu
+                          onClick={(e) => e.stopPropagation()}
+                          className="px-3 py-2 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                        >
+                          {link.name}
+                        </a>
+                      ))}
+                    </div>
+                  ) : /* Jika ada video YouTube untuk fitur lain, tampilkan video */
+                  YOUTUBE_EMBEDS[index] ? (
                     <div className="relative" style={{ paddingBottom: "56.25%", height: 0 }}>
                       <iframe
                         src={YOUTUBE_EMBEDS[index]}
@@ -78,6 +105,7 @@ const Feature = ({
                       />
                     </div>
                   ) : (
+                    /* Jika tidak ada, tampilkan gambar default (untuk fitur ke-3, 4, dst.) */
                     <Image
                       src={`/images/${index + 1}.jpg`}
                       alt={`Feature ${feature.title}`}
@@ -86,6 +114,7 @@ const Feature = ({
                       className="rounded-lg w-full h-auto"
                     />
                   )}
+                   {/* --- END PERUBAHAN --- */}
                 </div>
               )}
             </button>
