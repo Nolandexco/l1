@@ -23,7 +23,6 @@ import { ALL_TIERS } from "@/config/tiers";
 import { FaCheck, FaWhatsapp } from "react-icons/fa";
 import { RoughNotation } from "react-rough-notation";
 
-// Import tipe 'Tier' dari file definisi tipe global proyek Anda.
 import { Tier } from "@/types/pricing";
 
 const Pricing = ({
@@ -65,7 +64,7 @@ const Pricing = ({
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 justify-items-center w-full">
           {TIERS?.map((tier) => (
             <Card
-              key={tier.key as React.Key} // Menggunakan type assertion untuk key
+              key={tier.key as React.Key}
               className="p-3 flex-1 w-full max-w-md"
               shadow="md"
             >
@@ -82,7 +81,6 @@ const Pricing = ({
                     {tier.price}
                   </span>
                 </p>
-                {/* Menambahkan pengecekan untuk 'features' sebelum mapping */}
                 {tier.features && tier.features.length > 0 && (
                   <ul className="flex flex-col gap-2">
                     {tier.features.map((feature) => (
@@ -111,77 +109,52 @@ const Pricing = ({
       </section>
 
       {/* Modal Pembayaran */}
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="lg">
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="lg" scrollBehavior="inside">
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1 text-xl">
-                Konfirmasi Pembayaran: {selectedTier?.title}
+                Konfirmasi Pembayaran
               </ModalHeader>
               <ModalBody>
-                <div className="flex flex-col md:flex-row gap-6">
-                  <div className="flex-1 flex flex-col items-center justify-center text-center">
-                    <h3 className="text-lg font-semibold">Scan QRIS</h3>
-                    <p className="text-sm text-default-500 mb-2">
-                      Mendukung semua E-Wallet & M-Banking
-                    </p>
-                    <Image
-                      src="/qris-image.png"
-                      alt="QRIS Payment"
-                      width={250}
-                      height={250}
-                      className="object-contain"
-                    />
-                  </div>
-                  <Divider
-                    orientation="vertical"
-                    className="hidden md:flex h-auto"
+                <div className="flex flex-col items-center text-center">
+                  <h3 className="text-lg font-semibold">Scan QRIS untuk Membayar</h3>
+                  <p className="text-sm text-default-500 mb-2">
+                    Mendukung semua E-Wallet & M-Banking
+                  </p>
+                  <Image
+                    src="/qris-image.png"
+                    alt="QRIS Payment"
+                    width={280} // Sedikit diperbesar agar lebih jelas
+                    height={280}
+                    className="object-contain"
                   />
-                  <Divider
-                    orientation="horizontal"
-                    className="flex md:hidden"
-                  />
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold mb-3">
-                      Rincian Pesanan
-                    </h3>
-                    <div className="flex justify-between">
-                      <p className="text-default-500">Paket</p>
-                      <p className="font-medium">{selectedTier?.title}</p>
-                    </div>
-                    <Spacer y={2} />
-                    <div className="flex justify-between">
-                      <p className="text-default-500">Harga</p>
-                      <p className="font-medium text-blue-500">
-                        {selectedTier?.price}
-                      </p>
-                    </div>
-                    <Divider className="my-3" />
-                    
-                    {/* --- INI BAGIAN YANG DIPERBAIKI --- */}
-                    {/* Cek apakah 'features' ada & tidak kosong sebelum di-render */}
-                    {selectedTier?.features &&
-                      selectedTier.features.length > 0 && (
-                        <ul className="flex flex-col gap-2 mb-3">
-                          <p className="font-medium mb-1">Fitur termasuk:</p>
-                          {selectedTier.features.map((feature) => (
-                            <li
-                              key={feature}
-                              className="flex items-center gap-2 text-sm"
-                            >
-                              <FaCheck className="text-blue-500" />
-                              <p className="text-default-500">{feature}</p>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    {/* --- AKHIR BAGIAN PERBAIKAN --- */}
+                </div>
 
-                    <p className="text-xs text-default-400 mt-4">
-                      Setelah melakukan pembayaran, silakan konfirmasi melalui
-                      tombol WhatsApp di bawah.
+                <Divider className="my-4" />
+
+                <div className="w-full">
+                  <h3 className="text-lg font-semibold mb-3">
+                    Rincian Pesanan
+                  </h3>
+                  <div className="flex justify-between">
+                    <p className="text-default-500">Paket</p>
+                    <p className="font-medium">{selectedTier?.title}</p>
+                  </div>
+                  <Spacer y={2} />
+                  <div className="flex justify-between">
+                    <p className="text-default-500">Total Harga</p>
+                    <p className="font-semibold text-xl text-blue-500">
+                      {selectedTier?.price}
                     </p>
                   </div>
+
+                  {/* BAGIAN FITUR SUDAH DIHAPUS DARI SINI */}
+
+                  <p className="text-xs text-default-400 mt-4 text-center">
+                    Setelah melakukan pembayaran, silakan konfirmasi melalui
+                    tombol WhatsApp di bawah.
+                  </p>
                 </div>
               </ModalBody>
               <ModalFooter>
