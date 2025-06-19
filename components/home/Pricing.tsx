@@ -16,25 +16,16 @@ import {
   ModalBody,
   ModalFooter,
   useDisclosure,
-  Image, // <-- Impor komponen Image
+  Image,
 } from "@nextui-org/react";
 
 import { ALL_TIERS } from "@/config/tiers";
-import { FaCheck, FaWhatsapp } from "react-icons/fa"; // <-- Impor ikon WhatsApp
+import { FaCheck, FaWhatsapp } from "react-icons/fa";
 import { RoughNotation } from "react-rough-notation";
 
-// Definisikan tipe untuk tier agar lebih aman
-interface Tier {
-  key: number;
-  title: string;
-  description: string;
-  price: string;
-  features: string[];
-  buttonText: string;
-  buttonColor: "primary" | "secondary" | "default" | "success" | "warning" | "danger" | undefined;
-  buttonVariant: "solid" | "bordered" | "light" | "flat" | "faded" | "shadow" | "ghost" | undefined;
-  href: string;
-}
+// Import tipe 'Tier' dari file definisi tipe global proyek Anda.
+// Ini akan memperbaiki error "Type is not assignable".
+import { Tier } from "@/types/pricing";
 
 const Pricing = ({
   id,
@@ -45,6 +36,8 @@ const Pricing = ({
   locale: any;
   langName: string;
 }) => {
+  // Baris ini sekarang akan valid karena tipe `Tier` yang diimpor
+  // cocok dengan data dari `ALL_TIERS`.
   const TIERS: Tier[] = ALL_TIERS[`TIERS_${langName.toUpperCase()}`];
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedTier, setSelectedTier] = useState<Tier | null>(null);
@@ -74,7 +67,12 @@ const Pricing = ({
         <Spacer y={8} />
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 justify-items-center w-full">
           {TIERS?.map((tier) => (
-            <Card key={tier.key} className="p-3 flex-1 w-full max-w-md" shadow="md">
+            <Card
+              // Properti 'key' di sini akan menerima tipe Enum dari data Anda
+              key={tier.key}
+              className="p-3 flex-1 w-full max-w-md"
+              shadow="md"
+            >
               <CardHeader className="flex flex-col items-start gap-2 pb-6">
                 <h2 className="text-large font-medium">{tier.title}</h2>
                 <p className="text-medium text-default-500">
@@ -102,7 +100,7 @@ const Pricing = ({
                   fullWidth
                   color={tier.buttonColor}
                   variant={tier.buttonVariant}
-                  onPress={() => handleButtonClick(tier)} // <-- Panggil fungsi untuk membuka modal
+                  onPress={() => handleButtonClick(tier)}
                 >
                   {tier.buttonText}
                 </Button>
@@ -130,14 +128,17 @@ const Pricing = ({
                       Mendukung semua E-Wallet & M-Banking
                     </p>
                     <Image
-                      src="/qris-image.png" // <-- GANTI DENGAN PATH GAMBAR QRIS ANDA
+                      src="/qris-image.png"
                       alt="QRIS Payment"
                       width={250}
                       height={250}
                       className="object-contain"
                     />
                   </div>
-                  <Divider orientation="vertical" className="hidden md:flex h-auto" />
+                  <Divider
+                    orientation="vertical"
+                    className="hidden md:flex h-auto"
+                  />
                   <Divider orientation="horizontal" className="flex md:hidden" />
                   {/* Sisi Kanan: Rincian Pembayaran */}
                   <div className="flex-1">
