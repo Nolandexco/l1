@@ -14,7 +14,7 @@ import { ALL_TIERS } from "@/config/tiers";
 import { FaCheck } from "react-icons/fa";
 import { RoughNotation } from "react-rough-notation";
 import { useState } from "react";
-import PaymentModal from "./PaymentModal"; // Adjust the import path as needed
+import PaymentModal from "../ui/PaymentModal"; // Corrected import path
 
 const Pricing = ({
   id,
