@@ -14,20 +14,25 @@ const Feature = ({
   locale: any;
   langName: string;
 }) => {
-  const [selectedFeatureIndex, setSelectedFeatureIndex] = useState<number | null>(
-    null
-  );
+  const [selectedFeatureIndex, setSelectedFeatureIndex] = useState<number | null>(null);
+  // --- START PERUBAHAN OPSI 1 ---
+  // State untuk mengontrol visibilitas dropdown
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  // --- END PERUBAHAN OPSI 1 ---
+
   const FEATURES =
-    ALL_FEATURES[`FEATURES_${langName?.toUpperCase?.()}`] ??
-    ALL_FEATURES.FEATURES_EN;
+    ALL_FEATURES[`FEATURES_${langName?.toUpperCase?.()}`] ?? ALL_FEATURES.FEATURES_EN;
 
   const handleCardClick = (index: number) => {
+    // Tutup dropdown jika kartu lain diklik atau kartu yang sama ditutup
+    if (selectedFeatureIndex !== index) {
+      setIsDropdownOpen(false);
+    }
     setSelectedFeatureIndex(selectedFeatureIndex === index ? null : index);
   };
 
   const YOUTUBE_EMBEDS: { [key: number]: string } = {
-    1: "https://www.youtube.com/embed/dQw4w9WgXcQ", // fitur ke-2
-    // Tambah key lain kalau fitur ke-3, ke-4, dll pakai video
+    1: "https://www.youtube.com/embed/dQw4w9WgXcQ",
   };
 
   const exampleLinks = Array.from({ length: 6 }, (_, i) => ({
@@ -36,8 +41,6 @@ const Feature = ({
   }));
 
   return (
-    // --- PERUBAHAN DI SINI ---
-    // Menambahkan `className` untuk menaikkan stacking context section ini.
     <section id={id} className="relative z-10">
       <div className="container space-y-6 rounded-md bg-secondary py-14 lg:py-24">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
@@ -76,25 +79,45 @@ const Feature = ({
 
               {selectedFeatureIndex === index && (
                 <div className="mt-4 w-full">
-                  {/* Jika ini adalah kartu fitur pertama (index 0), tampilkan 6 tombol */}
+                  {/* --- START PERUBAHAN OPSI 1 --- */}
                   {index === 0 ? (
-                    <div className="grid w-full grid-cols-3 gap-2">
-                      {exampleLinks.map((link) => (
-                        <a
-                          key={link.url}
-                          href={link.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          // Hentikan event click agar tidak menutup kartu
+                    <div className="relative w-full">
+                      {/* Tombol Utama Dropdown */}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation(); // Mencegah kartu tertutup saat tombol ini diklik
+                          setIsDropdownOpen(!isDropdownOpen);
+                        }}
+                        className="w-full px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors flex justify-between items-center"
+                      >
+                        Lihat Contoh
+                        {/* Ikon panah kecil */}
+                        <svg className={`w-4 h-4 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                      </button>
+
+                      {/* Daftar Link (Menu Dropdown) */}
+                      {isDropdownOpen && (
+                        <div 
                           onClick={(e) => e.stopPropagation()}
-                          className="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                          className="absolute top-full left-0 mt-2 w-full bg-white dark:bg-slate-800 rounded-md shadow-lg border dark:border-slate-700 z-20"
                         >
-                          {link.name}
-                        </a>
-                      ))}
+                          <div className="py-1">
+                            {exampleLinks.map((link) => (
+                              <a
+                                key={link.url}
+                                href={link.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+                              >
+                                {link.name}
+                              </a>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  ) : /* Jika ada video YouTube untuk fitur lain, tampilkan video */
-                  YOUTUBE_EMBEDS[index] ? (
+                  ) : YOUTUBE_EMBEDS[index] ? (
                     <div
                       className="relative"
                       style={{ paddingBottom: "56.25%", height: 0 }}
@@ -109,7 +132,6 @@ const Feature = ({
                       />
                     </div>
                   ) : (
-                    /* Jika tidak ada, tampilkan gambar default (untuk fitur ke-3, 4, dst.) */
                     <Image
                       src={`/images/${index + 1}.jpg`}
                       alt={`Feature ${feature.title}`}
@@ -118,6 +140,7 @@ const Feature = ({
                       className="h-auto w-full rounded-lg"
                     />
                   )}
+                  {/* --- END PERUBAHAN OPSI 1 --- */}
                 </div>
               )}
             </button>
