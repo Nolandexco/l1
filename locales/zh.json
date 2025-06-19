@@ -1,0 +1,47 @@
+{
+  "Hero": {
+    "title1": "Mulai",
+    "title2": "Bisnis Online",
+    "title3": "Mudah & Cepat",
+    "description": "Bangun bisnis  profesional  yang  terpercaya atau Gabung program reseller dengan profit tinggi!"
+  },
+  "SocialProof": {
+    "maker": "orang sudah sukses membangun bisnis online bersama kami"
+  },
+  "Showcase": {
+    "title": "Kisah Sukses",
+    "description": "Lebih dari 1000 UMKM dan reseller sudah sukses go online dengan mudah bersama kami."
+  },
+  "Feature": {
+    "title": "Kenapa Bisnovo?"
+  },
+  "Pricing": {
+    "title": "Pilih Paket Anda",
+    "title2": "Harga Terjangkau, Layanan Komplit",
+    "description": "Paket lengkap untuk bisnis online atau reseller. Praktis, cepat, dan hasil nyata.",
+    "doYouLike": "Mau bisnis online yang gampang?",
+    "follow": "Ikuti Instagram kami @bisnovoco"
+  },
+  "Testimonials": {
+    "title": "Cerita Pelanggan",
+    "description1": "Pendapat nyata dari mereka yang sudah membangun bisnis dengan Bisnovo",
+    "description2": "Lihat kisah mereka",
+    "description3": "dan hasil nyatanya."
+  },
+  "FAQ": {
+    "title": "Pertanyaan Sering Diajukan",
+    "description": "Cari tahu jawaban atas pertanyaan tentang paket bisnis online dan program reseller kami."
+  },
+  "CTA": {
+    "title": "Mulai Bisnis Online Sekarang",
+    "description1": " Dapatkan diiskon 50%",
+    "description2": "untuk reseller",
+    "description3": "kami ",
+    "description4": "dan dapatkan",
+    "description5": "alat promosi",
+    "description6": "gratis "
+  },
+  "CTAButton": {
+    "title": "Mulai Sekarang"
+  }
+}

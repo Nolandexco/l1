@@ -1,0 +1,40 @@
+{
+  "Hero": {
+    "title1": "Build Your",
+    "title2": "Online Business",
+    "title3": "Today",
+    "description": "Create your brand or resell our ready-made products. Zero hassle, full support."
+  },
+  "SocialProof": {
+    "text": "Trusted by 1,000+ entrepreneurs"
+  },
+  "Showcase": {
+    "title": "Success Stories",
+    "description": "Over 1,000 people have grown with Bisnovo."
+  },
+  "Feature": {
+    "title": "Why Choose Bisnovo?"
+  },
+  "Pricing": {
+    "title": "Choose a Plan",
+    "title2": "Affordable & Complete",
+    "description": "For new businesses and aspiring resellers.",
+    "doYouLike": "Want to start your journey?",
+    "follow": "Follow us @bisnovoco"
+  },
+  "Testimonials": {
+    "title": "What Our Users Say",
+    "description": "Real feedback from real success stories."
+  },
+  "FAQ": {
+    "title": "Frequently Asked Questions",
+    "description": "Details about our plans, benefits, and how to become a reseller."
+  },
+  "CTA": {
+    "title": "Get Started Today",
+    "description": "Get 50% off and access to complete tools to launch your business."
+  },
+  "CTAButton": {
+    "title": "Let’s Go"
+  }
+}
