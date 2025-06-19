@@ -14,9 +14,12 @@ const Feature = ({
   locale: any;
   langName: string;
 }) => {
-  const [selectedFeatureIndex, setSelectedFeatureIndex] = useState<number | null>(null);
+  const [selectedFeatureIndex, setSelectedFeatureIndex] = useState<number | null>(
+    null
+  );
   const FEATURES =
-    ALL_FEATURES[`FEATURES_${langName?.toUpperCase?.()}`] ?? ALL_FEATURES.FEATURES_EN;
+    ALL_FEATURES[`FEATURES_${langName?.toUpperCase?.()}`] ??
+    ALL_FEATURES.FEATURES_EN;
 
   const handleCardClick = (index: number) => {
     setSelectedFeatureIndex(selectedFeatureIndex === index ? null : index);
@@ -27,19 +30,18 @@ const Feature = ({
     // Tambah key lain kalau fitur ke-3, ke-4, dll pakai video
   };
 
-  // --- START PERUBAHAN ---
-  // Definisikan link untuk 6 tombol
   const exampleLinks = Array.from({ length: 6 }, (_, i) => ({
     name: `Contoh ${i + 1}`,
     url: `https://bisnovocontoh${i + 1}.vercel.app`,
   }));
-  // --- END PERUBAHAN ---
 
   return (
-    <section id={id}>
+    // --- PERUBAHAN DI SINI ---
+    // Menambahkan `className` untuk menaikkan stacking context section ini.
+    <section id={id} className="relative z-10">
       <div className="container space-y-6 rounded-md bg-secondary py-14 lg:py-24">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-          <h2 className="font-heading text-4xl md:text-6xl text-white">
+          <h2 className="font-heading text-4xl text-white md:text-6xl">
             <RoughNotation type="highlight" show={true} color="#2563EB">
               {locale?.title ?? "Features"}
             </RoughNotation>
@@ -51,9 +53,9 @@ const Feature = ({
             <button
               key={feature.title}
               onClick={() => handleCardClick(index)}
-              className="flex flex-col items-center justify-start rounded-md bg-background/70 p-8 shadow-md border dark:border-muted hover:bg-background/90 transition-colors cursor-pointer"
+              className="flex flex-col items-center justify-start rounded-md border bg-background/70 p-8 shadow-md transition-colors hover:bg-background/90 dark:border-muted cursor-pointer"
             >
-              <div className="flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 text-primary mb-3 mt-1">
+              <div className="mb-3 mt-1 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
                 {feature.icon && typeof feature.icon === "string" ? (
                   <span className="text-3xl">{feature.icon}</span>
                 ) : (
@@ -64,20 +66,19 @@ const Feature = ({
                 )}
               </div>
 
-              <h3 className="text-base font-semibold text-slate-800 dark:text-slate-100 mb-0.5 mt-[-4px]">
+              <h3 className="mb-0.5 mt-[-4px] text-base font-semibold text-slate-800 dark:text-slate-100">
                 {feature.title}
               </h3>
 
-              <p className="text-sm text-muted-foreground mt-0">
+              <p className="mt-0 text-sm text-muted-foreground">
                 {feature.content}
               </p>
 
               {selectedFeatureIndex === index && (
                 <div className="mt-4 w-full">
-                  {/* --- START PERUBAHAN --- */}
                   {/* Jika ini adalah kartu fitur pertama (index 0), tampilkan 6 tombol */}
                   {index === 0 ? (
-                    <div className="grid grid-cols-3 gap-2 w-full">
+                    <div className="grid w-full grid-cols-3 gap-2">
                       {exampleLinks.map((link) => (
                         <a
                           key={link.url}
@@ -86,7 +87,7 @@ const Feature = ({
                           rel="noopener noreferrer"
                           // Hentikan event click agar tidak menutup kartu
                           onClick={(e) => e.stopPropagation()}
-                          className="px-3 py-2 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                          className="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                         >
                           {link.name}
                         </a>
@@ -94,11 +95,14 @@ const Feature = ({
                     </div>
                   ) : /* Jika ada video YouTube untuk fitur lain, tampilkan video */
                   YOUTUBE_EMBEDS[index] ? (
-                    <div className="relative" style={{ paddingBottom: "56.25%", height: 0 }}>
+                    <div
+                      className="relative"
+                      style={{ paddingBottom: "56.25%", height: 0 }}
+                    >
                       <iframe
                         src={YOUTUBE_EMBEDS[index]}
                         title={`Feature ${feature.title}`}
-                        className="absolute top-0 left-0 w-full h-full rounded-lg"
+                        className="absolute left-0 top-0 h-full w-full rounded-lg"
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
@@ -111,10 +115,9 @@ const Feature = ({
                       alt={`Feature ${feature.title}`}
                       width={200}
                       height={150}
-                      className="rounded-lg w-full h-auto"
+                      className="h-auto w-full rounded-lg"
                     />
                   )}
-                   {/* --- END PERUBAHAN --- */}
                 </div>
               )}
             </button>
