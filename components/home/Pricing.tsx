@@ -20,7 +20,8 @@ import {
 } from "@nextui-org/react";
 
 import { ALL_TIERS } from "@/config/tiers";
-import { FaCheck, FaWhatsapp } from "react-icons/fa";
+// Menambahkan ikon FaDownload
+import { FaCheck, FaWhatsapp, FaDownload } from "react-icons/fa";
 import { RoughNotation } from "react-rough-notation";
 
 import { Tier } from "@/types/pricing";
@@ -108,27 +109,38 @@ const Pricing = ({
         <Spacer y={12} />
       </section>
 
-      {/* Modal Pembayaran */}
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="lg" scrollBehavior="inside">
+      {/* --- MODAL PEMBAYARAN YANG SUDAH DIREVISI --- */}
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="md" scrollBehavior="inside">
         <ModalContent>
           {(onClose) => (
             <>
+              {/* Judul diubah menjadi lebih ringkas */}
               <ModalHeader className="flex flex-col gap-1 text-xl">
-                Konfirmasi Pembayaran
+                Pembayaran
               </ModalHeader>
-              <ModalBody>
+              <ModalBody className="pb-6">
                 <div className="flex flex-col items-center text-center">
-                  <h3 className="text-lg font-semibold">Scan QRIS untuk Membayar</h3>
-                  <p className="text-sm text-default-500 mb-2">
-                    Mendukung semua E-Wallet & M-Banking
-                  </p>
+                  <h3 className="text-lg font-semibold">Scan untuk Membayar</h3>
+                  <Spacer y={2} />
                   <Image
                     src="/qris-image.png"
                     alt="QRIS Payment"
-                    width={280} // Sedikit diperbesar agar lebih jelas
+                    width={280}
                     height={280}
-                    className="object-contain"
+                    className="object-contain rounded-lg"
                   />
+                  <Spacer y={3} />
+                  {/* Tombol untuk mengunduh gambar QRIS */}
+                  <Button
+                    as="a"
+                    href="/qris-image.png"
+                    download="QRIS_Pembayaran.png"
+                    variant="flat"
+                    color="primary"
+                    startContent={<FaDownload />}
+                  >
+                    Unduh QRIS
+                  </Button>
                 </div>
 
                 <Divider className="my-4" />
@@ -137,24 +149,17 @@ const Pricing = ({
                   <h3 className="text-lg font-semibold mb-3">
                     Rincian Pesanan
                   </h3>
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
                     <p className="text-default-500">Paket</p>
-                    <p className="font-medium">{selectedTier?.title}</p>
+                    <p className="font-medium text-right">{selectedTier?.title}</p>
                   </div>
                   <Spacer y={2} />
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
                     <p className="text-default-500">Total Harga</p>
                     <p className="font-semibold text-xl text-blue-500">
                       {selectedTier?.price}
                     </p>
                   </div>
-
-                  {/* BAGIAN FITUR SUDAH DIHAPUS DARI SINI */}
-
-                  <p className="text-xs text-default-400 mt-4 text-center">
-                    Setelah melakukan pembayaran, silakan konfirmasi melalui
-                    tombol WhatsApp di bawah.
-                  </p>
                 </div>
               </ModalBody>
               <ModalFooter>
@@ -164,13 +169,13 @@ const Pricing = ({
                 <Button
                   as={Link}
                   color="success"
-                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=Halo,%20saya%20ingin%20konfirmasi%20pembayaran%20untuk%20paket%20${selectedTier?.title}.`}
+                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=Halo,%20saya%20sudah%20membayar%20untuk%20paket%20${selectedTier?.title}.`}
                   target="_blank"
                   rel="noopener noreferrer nofollow"
                   startContent={<FaWhatsapp />}
                   className="text-white"
                 >
-                  Konfirmasi via WhatsApp
+                  Konfirmasi WhatsApp
                 </Button>
               </ModalFooter>
             </>
