@@ -54,27 +54,36 @@ const Hero = ({
 
   return (
     <>
+      {/* BAGIAN HERO UTAMA */}
       <section
         lang={langName}
-        className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16 pt-16 md:pt-24 text-center"
+        // DIUBAH: Padding atas ditambah untuk mendorong konten ke bawah (pt-16 -> pt-24, md:pt-24 -> md:pt-32)
+        className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16 pt-24 md:pt-32 text-center"
       >
         <h1
           className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight tracking-tight
-                     [&>*]:block sm:[&>*]:inline-block" // Ensures LineText wraps on small screens
+                     [&>*]:block sm:[&>*]:inline-block" // Memastikan LineText ter-wrap di layar kecil
           style={{
-            fontSize: "clamp(2.5rem, 8vw, 5rem)", // Fluid typography
+            // DIUBAH: Ukuran font dibuat sedikit lebih besar dan responsif (clamp)
+            fontSize: "clamp(3rem, 10vw, 6rem)", // Sebelumnya: clamp(2.5rem, 8vw, 5rem)
           }}
         >
           {locale.title1} <LineText>{locale.title2}</LineText> {locale.title3}
         </h1>
-        <p className="mx-auto mt-6 max-w-2xl text-lg sm:text-xl md:text-2xl tracking-tight text-slate-700 dark:text-slate-400">
+        <p 
+          // DIUBAH: Margin atas ditambah agar jarak dari judul lebih jauh (mt-6 -> mt-8)
+          className="mx-auto mt-8 max-w-2xl text-lg sm:text-xl md:text-2xl tracking-tight text-slate-700 dark:text-slate-400">
           {locale.description}
         </p>
       </section>
 
+      {/* Tombol CTA, jaraknya akan mengikuti secara otomatis karena margin di atasnya */}
       <CTAButton locale={CTALocale}></CTAButton>
 
-      <section className="mx-auto w-full md:max-w-5xl lg:max-w-7xl px-0 md:px-6 lg:px-8 pt-16 pb-12">
+      {/* BAGIAN LOGO MARQUEE */}
+      <section 
+        // DIUBAH: Padding atas ditambah agar ada "jeda" lebih setelah tombol CTA (pt-16 -> pt-24)
+        className="mx-auto w-full md:max-w-5xl lg:max-w-7xl px-0 md:px-6 lg:px-8 pt-24 pb-12">
         <Marquee direction="left" autoFill pauseOnHover>
           {LOGOS.map((image, index) => (
             <div className="mx-6 text-gray-500" key={index}>
