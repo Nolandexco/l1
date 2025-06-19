@@ -10,10 +10,11 @@ import {
   Link,
   Spacer,
 } from "@nextui-org/react";
-
 import { ALL_TIERS } from "@/config/tiers";
 import { FaCheck } from "react-icons/fa";
 import { RoughNotation } from "react-rough-notation";
+import { useState } from "react";
+import PaymentModal from "./PaymentModal"; // Adjust the import path as needed
 
 const Pricing = ({
   id,
@@ -25,6 +26,21 @@ const Pricing = ({
   langName: string;
 }) => {
   const TIERS = ALL_TIERS[`TIERS_${langName.toUpperCase()}`];
+  const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
+  const [selectedTier, setSelectedTier] = useState(null); // State to store selected tier
+
+  // Function to handle button click and open modal
+  const handleButtonClick = (tier) => {
+    setSelectedTier(tier);
+    setIsModalOpen(true);
+  };
+
+  // Function to close the modal
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedTier(null);
+  };
+
   return (
     <section
       id={id}
@@ -36,10 +52,7 @@ const Pricing = ({
             {locale.title}
           </RoughNotation>
         </h2>
-
-        {/* Baris <h3> yang berisi "Get unlimited access" telah dihapus dari sini */}
-
-        <Spacer y={2} /> {/* Spacer dikurangi agar jarak tidak terlalu jauh */}
+        <Spacer y={2} />
         <p className="text-large text-default-500">{locale.description}</p>
       </div>
       <Spacer y={8} />
@@ -74,12 +87,9 @@ const Pricing = ({
             <CardFooter>
               <Button
                 fullWidth
-                as={Link}
                 color={tier.buttonColor}
-                href={tier.href}
                 variant={tier.buttonVariant}
-                target="_blank"
-                rel="noopener noreferrer nofollow"
+                onClick={() => handleButtonClick(tier)} // Trigger modal on click
               >
                 {tier.buttonText}
               </Button>
@@ -87,6 +97,14 @@ const Pricing = ({
           </Card>
         ))}
       </div>
+      {/* Render PaymentModal and pass necessary props */}
+      {selectedTier && (
+        <PaymentModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          tier={selectedTier}
+        />
+      )}
       <Spacer y={12} />
     </section>
   );
