@@ -49,7 +49,8 @@ const Pricing = ({
     <>
       <section
         id={id}
-        className="flex flex-col justify-center max-w-4xl items-center pt-16"
+        // Menambahkan 'w-full' dan 'px-4' untuk padding horizontal
+        className="flex w-full flex-col justify-center max-w-4xl items-center pt-16 px-4"
       >
         <div className="flex flex-col text-center max-w-xl">
           <h2 className="text-center text-white">
@@ -108,25 +109,22 @@ const Pricing = ({
         <Spacer y={12} />
       </section>
 
-      {/* --- MODAL PEMBAYARAN REVISI FINAL --- */}
+      {/* --- MODAL PEMBAYARAN REVISI --- */}
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         size="sm"
-        // Menambahkan 'placement' untuk memaksa modal selalu di tengah layar
         placement="center"
       >
         <ModalContent>
           {(onClose) => (
             <>
-              {/* Header dikosongkan untuk menghapus teks "Pembayaran" */}
               <ModalHeader className="flex flex-col gap-1"></ModalHeader>
               <ModalBody className="pb-6">
                 <div className="flex flex-col items-center text-center">
                   <h3 className="text-lg font-semibold text-default-700">Scan untuk Membayar</h3>
                   <Spacer y={2} />
                   
-                  {/* Container untuk menampung gambar dan tombol download */}
                   <div className="relative">
                     <Image
                       src="/qris-image.png"
@@ -135,14 +133,14 @@ const Pricing = ({
                       height={280}
                       className="object-contain rounded-lg"
                     />
-                    {/* Tombol download minimalis di pojok gambar */}
+                    {/* Mengubah 'top-2' menjadi 'bottom-2' untuk memindahkan ikon ke bawah */}
                     <Button
                       isIconOnly
                       as="a"
                       href="/qris-image.png"
                       download="QRIS_Pembayaran.png"
                       aria-label="Unduh QRIS"
-                      className="absolute top-2 right-2 bg-black/20 backdrop-blur-sm"
+                      className="absolute bottom-2 right-2 bg-black/20 backdrop-blur-sm"
                       size="sm"
                     >
                       <FaDownload className="text-white" />
